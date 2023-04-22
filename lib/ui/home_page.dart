@@ -12,13 +12,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future<WeatherForcastModel> forecastObject;
-  String _cityName = 'Thanh%20pho%20Ho%20Chi%20Minh';
+  String _cityName = 'Thanh pho Ho Chi Minh';
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     forecastObject = Network().getWeatherForecast(cityName: _cityName);
+
+    forecastObject.then((value) {
+      print(value.city?.name);
+    });
   }
 
   @override
