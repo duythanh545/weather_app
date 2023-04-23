@@ -2,11 +2,12 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 
-import '../model/weather_forcast_model.dart';
+import '../model/weather_forecast_model.dart';
 import '../util/forecast_util.dart';
 
+//get value from api
 class Network {
-  Future<WeatherForcastModel> getWeatherForecast(
+  Future<WeatherForecastModel> getWeatherForecast(
       {required String cityName}) async {
     //Thanh%20pho%20Ho%20Chi%20Minh
     //e7db556f459941df6daaee5cdfb0a0ca
@@ -16,7 +17,7 @@ class Network {
     print('URL: ${Uri.encodeFull(finalUrl)}');
     if (response.statusCode == 200) {
       print('Weather data: ${response.body}');
-      return WeatherForcastModel.fromJson(jsonDecode(response.body));
+      return WeatherForecastModel.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Error getting weather forecast');
     }

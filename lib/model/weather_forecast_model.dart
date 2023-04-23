@@ -1,13 +1,13 @@
-class WeatherForcastModel {
+class WeatherForecastModel {
   String? cod;
   int? message;
   int? cnt;
   List<Lista>? list;
   City? city;
 
-  WeatherForcastModel({this.cod, this.message, this.cnt, this.list, this.city});
+  WeatherForecastModel({this.cod, this.message, this.cnt, this.list, this.city});
 
-  WeatherForcastModel.fromJson(Map<String, dynamic> json) {
+  WeatherForecastModel.fromJson(Map<String, dynamic> json) {
     cod = json['cod'];
     message = json['message'];
     cnt = json['cnt'];
@@ -34,7 +34,7 @@ class WeatherForcastModel {
     return data;
   }
 }
-
+// change list to lista because same name of class List
 class Lista {
   int? dt;
   Main? main;
@@ -129,6 +129,7 @@ class Main {
       this.tempKf});
 
   Main.fromJson(Map<String, dynamic> json) {
+    //add toDouble
     temp = json['temp'].toDouble();
     feelsLike = json['feels_like'].toDouble();
     tempMin = json['temp_min'].toDouble();
@@ -240,7 +241,7 @@ class Rain {
   Rain({this.d3h});
 
   Rain.fromJson(Map<String, dynamic> json) {
-    d3h = json['3h'];
+    d3h = json['3h'].toDouble();
   }
 
   Map<String, dynamic> toJson() {
