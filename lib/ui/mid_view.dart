@@ -3,31 +3,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:weather_app/util/forecast_util.dart';
 
 import '../model/weather_forecast_model.dart';
+import '../util/icon_weather.dart';
 
 int kelvinToCelsius(var kelvin) {
   return (kelvin - 273.15).toInt();
 }
 
-dynamic iconForWeather(String stateOfWeather) {
-  switch (stateOfWeather) {
-    case 'Snow':
-      return FontAwesomeIcons.snowman;
-      break;
-    case 'Clouds':
-      return FontAwesomeIcons.cloud;
-      break;
-    case 'Rain':
-      return FontAwesomeIcons.cloudRain;
-      break;
-    case 'Clear':
-      FontAwesomeIcons.sun;
-      break;
-    default:
-      {
-        return Icons.refresh_rounded;
-      }
-  }
-}
+
 
 Widget smallIndex(String value, IconData icon) {
   return Column(
@@ -47,9 +29,13 @@ Widget smallIndex(String value, IconData icon) {
 Widget currentWeather(AsyncSnapshot<WeatherForecastModel> snapshot) {
   var forecastList = snapshot.data!.list;
   String formattedDate = Util.getFormattedDate(
-      DateTime.fromMillisecondsSinceEpoch((forecastList![1].dt! * 1000) ?? 0));
+      DateTime.fromMillisecondsSinceEpoch((forecastList![0].dt! * 1000) ?? 0));
 
   return Container(
+    decoration: BoxDecoration(
+      border: Border.all(width: 1, color: Colors.black),
+      borderRadius: BorderRadius.circular(10)
+    ),
     padding: EdgeInsets.all(20),
     margin: EdgeInsets.all(20),
     child: Column(
@@ -67,7 +53,7 @@ Widget currentWeather(AsyncSnapshot<WeatherForecastModel> snapshot) {
           height: 5,
         ),
         Text(
-          formattedDate,
+          'Updated: $formattedDate',
           style: TextStyle(wordSpacing: 2),
         ),
         const SizedBox(
@@ -77,11 +63,11 @@ Widget currentWeather(AsyncSnapshot<WeatherForecastModel> snapshot) {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
-              '${kelvinToCelsius(forecastList[1].main?.temp)} °C',
+              '${kelvinToCelsius(forecastList[0].main?.temp)} °C',
               style: TextStyle(fontSize: 35),
             ),
             Icon(
-              iconForWeather('${forecastList[1].weather![0].main}'),
+              WeatherIcon.iconForWeather('${forecastList[0].weather![0].main}'),
               size: 45,
               color: Colors.grey,
             ),
@@ -97,7 +83,7 @@ Widget currentWeather(AsyncSnapshot<WeatherForecastModel> snapshot) {
                 FontAwesomeIcons.faceSmile),
             smallIndex('${forecastList[1].main?.humidity}%', Icons.water_drop),
             smallIndex(
-                '${forecastList[1].wind?.speed} ml/h', FontAwesomeIcons.wind)
+                '${forecastList[1].wind?.speed} m/s', FontAwesomeIcons.wind)
           ],
         )
       ],

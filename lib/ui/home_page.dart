@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/network/network.dart';
 
 import '../model/weather_forecast_model.dart';
+import 'future_forecast.dart';
 import 'mid_view.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,7 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future<WeatherForecastModel> forecastObject;
-   String _cityName = 'Thanh pho Ho Chi Minh';
+  String _cityName = 'Thanh pho Ho Chi Minh';
 
   @override
   void initState() {
@@ -40,11 +41,12 @@ class _HomePageState extends State<HomePage> {
                   return Column(
                     children: [
                       currentWeather(snapshot),
+                      futureForecast(snapshot, context),
                     ],
                   );
                 } else {
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: LinearProgressIndicator(),
                   );
                 }
               },
